@@ -1,10 +1,12 @@
-# Clinic Booking
+# clinic-booking
 
-A small Rails app for booking appointments at a clinic. Practitioners have schedules, patients book time slots, and the app won't let two appointments overlap for the same practitioner.
+Small Rails app for booking appointments at a clinic. You can add patients, book them in with a practitioner, see each practitioner's schedule, and cancel appointments. It won't let you double-book a practitioner.
 
-## Running it
+I mostly work in React and wanted to actually learn Rails, so I picked something close to a real problem: clinic scheduling.
 
-Needs Ruby 3.3+.
+## Running it locally
+
+You need Ruby 3.4.
 
 ```
 bundle install
@@ -12,35 +14,27 @@ bin/rails db:setup
 bin/rails server
 ```
 
-Then open http://localhost:3000. `db:setup` loads some sample practitioners, patients and appointments for tomorrow.
+Then go to localhost:3000. `db:setup` adds a few fake practitioners and patients with appointments booked for tomorrow.
 
-Tests:
+To run the tests: `bin/rails test`
 
-```
-bin/rails test
-```
+## The double-booking check
 
-## How double-booking is prevented
-
-Each appointment stores `starts_at` and `ends_at`. Two appointments clash if one starts before the other ends and ends after the other starts:
+Two appointments overlap if one starts before the other ends and ends after the other starts:
 
 ```ruby
 .where("starts_at < ? AND ends_at > ?", ends_at, starts_at)
 ```
 
-I store `ends_at` instead of working it out from `duration_minutes` in the query. Date math in SQL looks different in SQLite and Postgres, and this way the check is just a comparison that can use the `(practitioner_id, starts_at)` index.
+I store `ends_at` on the appointment instead of calculating it from `duration_minutes` inside the query. Date math is written differently in SQLite and Postgres, so this keeps the query simple, and it can use the index on `(practitioner_id, starts_at)`.
 
-Back-to-back appointments (one ends at 10:30, the next starts at 10:30) are allowed because the comparison is strict.
+Since it's `<` and `>` and not `<=`, back-to-back bookings are allowed (one ends at 10:30, the next starts at 10:30).
 
-## Known gaps
+## What's missing
 
-- The overlap check is a validation, so two requests landing at the exact same moment could both pass. A real version would need a database-level constraint (Postgres exclusion constraint) or a lock.
-- No logins. Anyone can book or cancel.
-- No working hours. You can book someone at 3am.
-- Single time zone (Pacific).
+- The overlap check is a model validation, so two requests at the exact same moment could both get through. Postgres exclusion constraints would fix this at the database level.
+- No login, anyone can book or cancel
+- No working hours, so you can book someone at 3am
+- Everything is in Pacific time
 
-## What I'd add next
-
-- Practitioner availability (working hours, days off)
-- Patients booking for themselves
-- Email reminders with Active Job
+Next I want to add working hours for each practitioner, then email reminders with Active Job.
