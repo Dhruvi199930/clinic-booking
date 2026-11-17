@@ -1,0 +1,7 @@
+Hi <%= @patient.name %>,
+
+This is a reminder that you have an appointment with <%= @appointment.practitioner.name %> on <%= @starts_at.strftime("%A, %B %-d at %-l:%M %p") %> (<%= @starts_at.zone %>).
+
+It's booked for <%= @appointment.duration_minutes %> minutes.
+
+If you can't make it, please call the clinic to cancel.

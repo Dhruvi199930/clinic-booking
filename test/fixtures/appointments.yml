@@ -1,8 +1,9 @@
 # Fixtures skip callbacks, so ends_at has to be set by hand here.
-# Booked 10:00–10:30, two days out.
+# 10:00–10:30 Pacific on a weekday at least a day out, inside Ana's hours.
+<% day = Date.current.next_weekday.next_weekday.in_time_zone("Pacific Time (US & Canada)") %>
 ana_morning:
   practitioner: ana
   patient: sam
-  starts_at: <%= 2.days.from_now.change(hour: 10).to_fs(:db) %>
-  ends_at: <%= 2.days.from_now.change(hour: 10, min: 30).to_fs(:db) %>
+  starts_at: <%= day.change(hour: 10).to_fs(:db) %>
+  ends_at: <%= day.change(hour: 10, min: 30).to_fs(:db) %>
   duration_minutes: 30

@@ -1,6 +1,16 @@
+User.find_or_create_by!(email: "desk@clinic.test") do |user|
+  user.name = "Front Desk"
+  user.password = "password"
+end
+
 ana  = Practitioner.find_or_create_by!(name: "Dr. Ana Reyes")  { |p| p.specialty = "Physiotherapy" }
 ben  = Practitioner.find_or_create_by!(name: "Ben Okafor")     { |p| p.specialty = "Massage therapy" }
-mira = Practitioner.find_or_create_by!(name: "Mira Chen")      { |p| p.specialty = "Chiropractic" }
+mira = Practitioner.find_or_create_by!(name: "Mira Chen") do |p|
+  p.specialty = "Chiropractic"
+  p.day_starts_at_hour = 7
+  p.day_ends_at_hour = 15
+  p.works_weekends = true
+end
 
 patients = [
   [ "Sam Lee", "sam@example.com" ],
@@ -12,7 +22,7 @@ patients = [
 end
 
 if Appointment.none?
-  tomorrow = Time.zone.tomorrow
+  day = Time.zone.today.next_weekday.in_time_zone
 
   [
     [ ana,  patients[0], 9,  0,  30 ],
@@ -23,7 +33,7 @@ if Appointment.none?
     Appointment.create!(
       practitioner: practitioner,
       patient: patient,
-      starts_at: tomorrow.in_time_zone.change(hour: hour, min: min),
+      starts_at: day.change(hour: hour, min: min),
       duration_minutes: length
     )
   end

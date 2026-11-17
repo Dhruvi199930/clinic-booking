@@ -1,11 +1,25 @@
 require "test_helper"
 
 class AppointmentsControllerTest < ActionDispatch::IntegrationTest
+  setup do
+    sign_in_as users(:desk)
+  end
+
   test "lists upcoming appointments" do
     get appointments_path
 
     assert_response :success
     assert_select "td", text: "Sam Lee"
+  end
+
+  test "shows times in the logged-in person's time zone" do
+    delete session_path
+    sign_in_as users(:toronto)
+
+    get appointments_path
+
+    # Booked 10:00 Pacific, which is 1:00 PM in Toronto.
+    assert_select "td", text: /1:00 PM/
   end
 
   test "books an appointment" do

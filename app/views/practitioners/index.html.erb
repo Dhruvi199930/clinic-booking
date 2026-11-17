@@ -1,10 +1,14 @@
-<h1>Practitioners</h1>
+<div class="header">
+  <h1>Practitioners</h1>
+  <%= link_to "Add practitioner", new_practitioner_path, class: "button" %>
+</div>
 
 <table>
   <thead>
     <tr>
       <th>Name</th>
       <th>Specialty</th>
+      <th>Hours</th>
       <th>Upcoming</th>
     </tr>
   </thead>
@@ -13,6 +17,7 @@
       <tr>
         <td><%= link_to practitioner.name, practitioner %></td>
         <td><%= practitioner.specialty %></td>
+        <td class="muted"><%= practitioner.hours_label %></td>
         <td><%= practitioner.appointments.upcoming.count %></td>
       </tr>
     <% end %>

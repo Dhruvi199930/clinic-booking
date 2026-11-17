@@ -1,7 +1,7 @@
 <div class="header">
   <div>
     <h1><%= @practitioner.name %></h1>
-    <p class="muted"><%= @practitioner.specialty %></p>
+    <p class="muted"><%= @practitioner.specialty %> · <%= @practitioner.hours_label %> · <%= link_to "Edit", edit_practitioner_path(@practitioner) %></p>
   </div>
   <%= link_to "Book with #{@practitioner.name}", new_appointment_path(practitioner_id: @practitioner.id), class: "button" %>
 </div>

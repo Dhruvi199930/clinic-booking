@@ -1,0 +1,18 @@
+<h1>Your account</h1>
+
+<%= render "shared/errors", record: @user %>
+
+<%= form_with model: @user, url: account_path, method: :patch do |form| %>
+  <div class="field">
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :time_zone, "Show times in" %>
+    <%= form.time_zone_select :time_zone, ActiveSupport::TimeZone.country_zones("CA") %>
+  </div>
+
+  <%= form.submit "Save" %>
+  <%= link_to "Back", root_path %>
+<% end %>

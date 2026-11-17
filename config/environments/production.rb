@@ -13,4 +13,6 @@ Rails.application.configure do
 
   config.active_support.report_deprecations = false
   config.active_record.dump_schema_after_migration = false
+
+  config.action_mailer.default_url_options = { host: ENV.fetch("APP_HOST", "example.com") }
 end

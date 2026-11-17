@@ -9,3 +9,9 @@ module ActiveSupport
     fixtures :all
   end
 end
+
+class ActionDispatch::IntegrationTest
+  def sign_in_as(user, password: "password")
+    post session_path, params: { email: user.email, password: password }
+  end
+end

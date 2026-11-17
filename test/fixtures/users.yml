@@ -1,0 +1,11 @@
+desk:
+  name: Front Desk
+  email: desk@clinic.test
+  password_digest: <%= BCrypt::Password.create("password") %>
+  time_zone: Pacific Time (US & Canada)
+
+toronto:
+  name: Toronto Office
+  email: toronto@clinic.test
+  password_digest: <%= BCrypt::Password.create("password") %>
+  time_zone: Eastern Time (US & Canada)

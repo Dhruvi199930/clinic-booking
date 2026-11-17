@@ -1,0 +1,36 @@
+<%= render "shared/errors", record: practitioner %>
+
+<%= form_with model: practitioner do |form| %>
+  <div class="field">
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :specialty %>
+    <%= form.text_field :specialty %>
+  </div>
+
+  <div class="field">
+    <%= form.label :day_starts_at_hour, "Day starts at (hour, 0–23)" %>
+    <%= form.number_field :day_starts_at_hour, in: 0..23 %>
+  </div>
+
+  <div class="field">
+    <%= form.label :day_ends_at_hour, "Day ends at (hour, 1–24)" %>
+    <%= form.number_field :day_ends_at_hour, in: 1..24 %>
+  </div>
+
+  <div class="field checkbox">
+    <%= form.check_box :works_weekends %>
+    <%= form.label :works_weekends, "Works weekends" %>
+  </div>
+
+  <div class="field">
+    <%= form.label :time_zone, "Works in time zone" %>
+    <%= form.time_zone_select :time_zone, ActiveSupport::TimeZone.country_zones("CA") %>
+  </div>
+
+  <%= form.submit %>
+  <%= link_to "Back", practitioners_path %>
+<% end %>

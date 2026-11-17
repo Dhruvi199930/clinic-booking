@@ -7,7 +7,7 @@ class AppointmentsController < ApplicationController
   def new
     @appointment = Appointment.new(
       practitioner_id: params[:practitioner_id],
-      starts_at: Time.zone.tomorrow.in_time_zone.change(hour: 9)
+      starts_at: Time.zone.today.next_weekday.in_time_zone.change(hour: 9)
     )
   end
 
