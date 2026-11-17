@@ -1,0 +1,37 @@
+<div class="header">
+  <h1>Upcoming appointments</h1>
+  <%= link_to "Book appointment", new_appointment_path, class: "button" %>
+</div>
+
+<% if @days.empty? %>
+  <p class="muted">Nothing booked yet.</p>
+<% end %>
+
+<% @days.each do |day, appointments| %>
+  <h2><%= day.strftime("%A, %B %-d") %></h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Time</th>
+        <th>Practitioner</th>
+        <th>Patient</th>
+        <th>Notes</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% appointments.each do |appointment| %>
+        <tr>
+          <td><%= time_range(appointment) %></td>
+          <td><%= link_to appointment.practitioner.name, appointment.practitioner %></td>
+          <td><%= appointment.patient.name %></td>
+          <td class="muted"><%= appointment.notes %></td>
+          <td>
+            <%= button_to "Cancel", appointment, method: :delete, class: "button-link",
+                  form: { onsubmit: "return confirm('Cancel this appointment?')" } %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>

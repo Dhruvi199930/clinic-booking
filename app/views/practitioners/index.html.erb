@@ -1,0 +1,20 @@
+<h1>Practitioners</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Specialty</th>
+      <th>Upcoming</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @practitioners.each do |practitioner| %>
+      <tr>
+        <td><%= link_to practitioner.name, practitioner %></td>
+        <td><%= practitioner.specialty %></td>
+        <td><%= practitioner.appointments.upcoming.count %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

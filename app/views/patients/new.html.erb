@@ -1,0 +1,18 @@
+<h1>Add a patient</h1>
+
+<%= render "shared/errors", record: @patient %>
+
+<%= form_with model: @patient do |form| %>
+  <div class="field">
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :email %>
+    <%= form.email_field :email %>
+  </div>
+
+  <%= form.submit "Save" %>
+  <%= link_to "Back", patients_path %>
+<% end %>

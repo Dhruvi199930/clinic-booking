@@ -1,0 +1,34 @@
+<h1>Book an appointment</h1>
+
+<%= render "shared/errors", record: @appointment %>
+
+<%= form_with model: @appointment do |form| %>
+  <div class="field">
+    <%= form.label :practitioner_id, "Practitioner" %>
+    <%= form.collection_select :practitioner_id, Practitioner.order(:name), :id, :name, prompt: "Choose…" %>
+  </div>
+
+  <div class="field">
+    <%= form.label :patient_id, "Patient" %>
+    <%= form.collection_select :patient_id, Patient.order(:name), :id, :name, prompt: "Choose…" %>
+    <small><%= link_to "Add a new patient", new_patient_path %></small>
+  </div>
+
+  <div class="field">
+    <%= form.label :starts_at, "Start time" %>
+    <%= form.datetime_local_field :starts_at, step: 900 %>
+  </div>
+
+  <div class="field">
+    <%= form.label :duration_minutes, "Length" %>
+    <%= form.select :duration_minutes, Appointment::LENGTHS.map { |m| [ "#{m} min", m ] } %>
+  </div>
+
+  <div class="field">
+    <%= form.label :notes %>
+    <%= form.text_area :notes, rows: 3 %>
+  </div>
+
+  <%= form.submit "Book" %>
+  <%= link_to "Back", appointments_path %>
+<% end %>

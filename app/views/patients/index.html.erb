@@ -1,0 +1,21 @@
+<div class="header">
+  <h1>Patients</h1>
+  <%= link_to "Add patient", new_patient_path, class: "button" %>
+</div>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @patients.each do |patient| %>
+      <tr>
+        <td><%= patient.name %></td>
+        <td><%= patient.email %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

@@ -1,0 +1,30 @@
+<div class="header">
+  <div>
+    <h1><%= @practitioner.name %></h1>
+    <p class="muted"><%= @practitioner.specialty %></p>
+  </div>
+  <%= link_to "Book with #{@practitioner.name}", new_appointment_path(practitioner_id: @practitioner.id), class: "button" %>
+</div>
+
+<% if @appointments.empty? %>
+  <p class="muted">No upcoming appointments.</p>
+<% else %>
+  <table>
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Time</th>
+        <th>Patient</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @appointments.each do |appointment| %>
+        <tr>
+          <td><%= appointment.starts_at.strftime("%a %b %-d") %></td>
+          <td><%= time_range(appointment) %></td>
+          <td><%= appointment.patient.name %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>
