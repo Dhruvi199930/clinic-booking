@@ -4,6 +4,24 @@ Rails app for booking appointments at a clinic. Front desk staff log in, add pat
 
 I mostly work in React and wanted to actually learn Rails, so I picked something close to a real problem: clinic scheduling.
 
+## Screenshots
+
+Upcoming appointments, grouped by day:
+
+![Upcoming appointments](docs/appointments.png)
+
+Trying to book Dr. Reyes at 9:00 when she already has someone then:
+
+![Double-booking error](docs/double-booking.png)
+
+Booking form:
+
+![Booking form](docs/booking-form.png)
+
+Every page needs a login:
+
+![Login](docs/login.png)
+
 ## Running it locally
 
 You need Ruby 3.4 and the `sqlite3` command line tool (macOS already has it).
